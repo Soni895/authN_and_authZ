@@ -47,6 +47,7 @@ if(Email&&Password)
                         Email,
                         Password,
                         option,
+                        jwt_secret,
                     }
                 )
 
