@@ -18,7 +18,7 @@ if(Email&&Password)
         const ismatch= await bcrypt.compare(Password,response.Password);
         if(ismatch)
         {
-            const payload={
+            let payload={
                 Email:response.Email,
                 Role:response.Role,
                 id:response._id
@@ -29,6 +29,7 @@ if(Email&&Password)
                 {
                     expiresIn:"2h"
                 });
+                response=response.toObject();
                 response.Token=Token;
                 response.Password=undefined;
                 const option={
