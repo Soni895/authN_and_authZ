@@ -2,6 +2,7 @@ const express=require("express");
 const app=express();
 app.use(express.json());
 require("dotenv").config();
+url=process.env.db_url;
 port=process.env.port;
 const {db_connection}=require("./config/database");
 const user=require("./routes/user");
