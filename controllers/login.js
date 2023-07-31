@@ -1,92 +1,97 @@
-
-const bcrypt=require("bcrypt");
 const user=require("../models/usermodel");
-const jwt=require("jsonwebtoken");
+const bcrypt = require('bcrypt');
 require("dotenv").config();
+const jwt= require("jsonwebtoken");
 const jwt_secret=process.env.jwt_secret;
 
 exports.login=async(req,res)=>
 {
     try {
-        
-const {Email,Password}=req.body;
-if(Email&&Password)
-{
-    const response= await user.find({Email});
-    if(response)
-    {
-        const ismatch= await bcrypt.compare(Password,response.Password);
-        if(ismatch)
+        const {Email,Password}=req.body;
+
+        if(!Email||!Password)
         {
-            let payload={
+            return res.status(500).json(
+            {
+                    status:"unsuccessful",
+                    success:false,
+                    error:"Empty field please fill all required field",
+                }); 
+            }
+            const response= await user.findOne({Email});
+            if(!response)
+            {
+                return res.status(500).json(
+                        {
+                            status:"unsuccessful",
+                            success:false,
+                            error:"user  not found",
+                        });
+              }
+            const ismatch= await bcrypt.compare(Password,response.Password);
+            if(!ismatch)
+            {
+               return  res.status(500).json(
+                    {
+                        status:"unsuccessful",
+                        success:false,
+                        error:"password not match",
+                    }); 
+            }
+            const payload=
+            {
                 Email:response.Email,
-                Role:response.Role,
-                id:response._id
+                id:response._id,
+                Role:response.Role
 
             }
 
-            const Token=jwt.sign(payload,jwt_secret,
+            let token=jwt.sign(payload,jwt_secret,
                 {
-                    expiresIn:"2h"
+                    expiresIn:"2h",
                 });
-                response=response.toObject();
-                response.Token=Token;
+                response.Token=token;
                 response.Password=undefined;
-                const option={
-                    expires:new Date(Date.now()+3*24*60*60*1000),
-                    httpOnly:true,
-                    
-                }
 
-                res.cookie("Token",Token,option).status(200).json(
+                const options={
+                    expires:new Date( Date.now()+3*24*60*60*1000),
+                   httpOnly:true,
+
+                }
+                res.cookie("login",token,options).status(200).json(
                     {
                         status:"successful",
-                        response:response,
-                        Token:Token,
-                        ismatch:ismatch,
+                        token,
+                        response,
+                        message:"successful login",
                         Email,
                         Password,
-                        option,
-                        jwt_secret,
+
                     }
                 )
 
-        }
-        else{
-            res.status(400).json({
-                status:"unsuccessful",
-                error:"Password not match",
-            });
+                 
 
-        }
-    }
 
-    else{
-        res.status(400).json({
-            status:"unsuccessful",
-            error:"user not found",
-        });
+        
+         
 
-    }
 
-}
-else
-{
-    res.status(400).json({
-        status:"unsuccessful",
-        error:"empty field",
-    });
-}
 
+
+
+        
     } catch (error) {
-        res.status(400).json({
-            status:"unsuccessful",
-            error:error,
-        });
-
+        res.status(500).json(
+            {
+                status:"unsuccessful",
+                success:false,
+                error:error,
+            }
+        )
         
     }
 
-  
-  
+
+
 }
