@@ -9,7 +9,7 @@ exports.signup=async(req,res)=>
         const exist_user=await user.findOne({Email});
         if(exist_user)
         {
-            res.status(400).json(
+            return res.status(400).json(
                 {
                     status:"already exists user",
                     success:false,
@@ -37,17 +37,17 @@ exports.signup=async(req,res)=>
                 Name,Email,Password:hashedpassword,Role
             }
         )
-        res.status(200).json(
+        return res.status(200).json(
             {
                 status:true,
                 message:"user Signup successful",
-                info:User,
+                User,
             }
         )
 
 
     } catch (error) {
-        res.status(500).json(
+        return res.status(500).json(
             {
                 status:"unsuccessful",
                 success:false,
