@@ -50,7 +50,9 @@ exports.login=async(req,res)=>
                 {
                     expiresIn:"2h",
                 });
+                // response=response.toObject();
                 response.Token=token;
+                console.log(response.Token);
                 response.Password=undefined;
 
                 const options={
@@ -67,19 +69,7 @@ exports.login=async(req,res)=>
                         Email,
                         Password,
 
-                    }
-                )
-
-                 
-
-
-        
-         
-
-
-
-
-
+                    })
         
     } catch (error) {
         res.status(500).json(
