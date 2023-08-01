@@ -18,7 +18,7 @@ exports.login=async(req,res)=>
                     error:"Empty field please fill all required field",
                 }); 
             }
-            let response= await user.findOne({Email});
+            let response = await user.findOne({Email});
             if(!response)
             {
                 return res.status(500).json(

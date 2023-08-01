@@ -14,8 +14,7 @@ exports.signup=async(req,res)=>
                     status:"already exists user",
                     success:false,
 
-                }
-            )
+                } )
         }
         let hashedpassword;
         try{
@@ -24,7 +23,7 @@ exports.signup=async(req,res)=>
         }
         catch(error)
         {
-            res.status(400).json(
+            return res.status(400).json(
                 {
                     status:"error in hasing password",
                     success:false,

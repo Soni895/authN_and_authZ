@@ -8,8 +8,8 @@ exports.Auth=(req,res,next)=>
     try {
         // extract jwt token with different way headerSize,body,cookies
         //cookee parseer
-        const {token}=req.body;
-        if(!token)
+        const {Token}=req.body;
+        if(!Token)
         {
             return res.status(500).json(
                 {
@@ -20,10 +20,9 @@ exports.Auth=(req,res,next)=>
         }
         // verify the token
         try {
-            const decode=jwt.verify(token,jwt_secret);
-            console.log(decode);
-            req.user=decode;
-            console.log(decode);
+            const payload=jwt.verify(Token,jwt_secret);
+            req.user=payload;
+            console.log(req.user);
 
             
         } catch (error) {
@@ -61,7 +60,6 @@ exports.isStudent=(req,res,next)=>
                         success:false,
                         error:" user not authorize for this role",
                     });
-                    next();
         }
         
     } catch (error) {
@@ -73,6 +71,7 @@ exports.isStudent=(req,res,next)=>
             });
         
     }
+    next();
 
 }
 
@@ -99,4 +98,5 @@ exports.isAdmin=(req,res,next)=>
             });
         
     }
+    next();
 }
