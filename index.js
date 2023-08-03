@@ -6,6 +6,8 @@ url=process.env.db_url;
 port=process.env.port;
 const {db_connection}=require("./config/database");
 const user=require("./routes/user");
+let cookieParser = require('cookie-parser');
+app.use(cookieParser());
 app.listen(port,()=>
 {
     console.log("hi darshan soni",port);

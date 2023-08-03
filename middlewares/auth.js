@@ -9,6 +9,10 @@ exports.Auth=(req,res,next)=>
         // extract jwt token with different way headerSize,body,cookies
         //cookee parseer
         const {Token}=req.body;
+        // ||req.cookies;
+        // console.log(req.body.Token,"hi darshn soni\n");
+        // console.log(req.Cookies.Token);
+
         if(!Token)
         {
             return res.status(500).json(
@@ -22,7 +26,7 @@ exports.Auth=(req,res,next)=>
         try {
             const payload=jwt.verify(Token,jwt_secret);
             req.user=payload;
-            console.log(req.user);
+    
 
             
         } catch (error) {
