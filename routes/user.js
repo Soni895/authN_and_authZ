@@ -18,10 +18,9 @@ router.get("/student",Auth,isStudent,(req,res)=>
     )
 
 })
-
 router.get("/admin",Auth,isAdmin,(req,res)=>
 {
-    res.json(
+  res.json(
         {
             status:"successful",
             isStudnent:true,

@@ -16,6 +16,15 @@ exports.signup=async(req,res)=>
 
                 } )
         }
+        if(!Email||!Password)
+        {
+            return res.status(500).json(
+            {
+                    status:"unsuccessful",
+                    success:false,
+                    error:"Empty field please fill all required field",
+                }); 
+            }
         let hashedpassword;
         try{
             hashedpassword= await bcrypt.hash(Password,10);
