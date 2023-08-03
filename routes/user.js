@@ -6,7 +6,7 @@ const {Auth,isStudent,isAdmin}=require("../middlewares/auth")
 router.post("/login",login);
 router.post("/signup",signup);
 
-router.get("/student",Auth,isStudent,(req,res)=>
+router.get("/student",Auth,isStudent,(req,res,next)=>
 {
     res.json(
         {
@@ -19,7 +19,7 @@ router.get("/student",Auth,isStudent,(req,res)=>
 
 })
 
-router.get("/admin",Auth,isAdmin,(req,res)=>
+router.get("/admin",Auth,isAdmin,(req,res,next)=>
 {
     res.json(
         {
