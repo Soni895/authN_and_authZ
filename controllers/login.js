@@ -69,7 +69,7 @@ exports.login=async(req,res)=>
                         Email,
                         Password,
 
-                    })
+                    });
         
     } catch (error) {
         res.status(500).json(
