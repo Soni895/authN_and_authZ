@@ -9,6 +9,7 @@ exports.Auth=(req,res,next)=>
         // extract jwt token with different way headerSize,body,cookies
         //cookee parseer
         const {Token}=req.body||req.cookies || req.header("Authorization").replace("Bearer ","");
+        console.log(req.cookies.Token,"\n",req.body.Token);
      
         console.log(req.header("Authorization"));
     
