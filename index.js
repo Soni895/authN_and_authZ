@@ -15,7 +15,7 @@ app.listen(port,()=>
 db_connection();
 app.use("/user",user);
 
-app.get("/",(req,res)=>
+app.get("*",(req,res)=>
 
 {
     res.send("welcome to authN and authZ project");
